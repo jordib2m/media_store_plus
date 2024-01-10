@@ -45,12 +45,12 @@ class MediaStorePlusPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
     private lateinit var channel: MethodChannel
     private lateinit var result: io.flutter.plugin.common.MethodChannel.Result
 
-    private lateinit var uriString: String
-    private lateinit var fileName: String
-    private lateinit var tempFilePath: String
+    private var uriString: String = ""
+    private var fileName: String = ""
+    private var tempFilePath: String = ""
     private var dirType: Int = 0
-    private lateinit var dirName: String
-    private lateinit var appFolder: String
+    private var dirName: String = ""
+    private var appFolder: String = ""
 
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
@@ -668,6 +668,8 @@ class MediaStorePlusPlugin : FlutterPlugin, MethodCallHandler, ActivityAware,
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
+        if (tempFilePath == "" || fileName == "" || appFolder == "" || dirName == "") return true;
+
         if (requestCode == 990) {
             if (resultCode == Activity.RESULT_OK) {
                 saveFile(
